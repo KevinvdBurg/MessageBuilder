@@ -83,7 +83,7 @@ namespace MessageBuilder
         /// The next (complete) message (including markers), 
         /// or null if no message was found.
         /// </returns>
-        public String FindAndRemoveNextMessage()
+        private String FindAndRemoveNextMessage()
         {
             int beginIndex = bufferedData.IndexOf(messageBeginMarker);
 
