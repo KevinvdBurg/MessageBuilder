@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MessageBuilder
 {
@@ -92,23 +93,24 @@ namespace MessageBuilder
         /// The next (complete) message (including markers), 
         /// or null if no message was found.
         /// </returns>
-        private String FindAndRemoveNextMessage()
+        public String FindAndRemoveNextMessage(String message)
         {
-            int beginIndex = bufferedData.IndexOf(messageBeginMarker);
+            int beginIndex = message.IndexOf(messageBeginMarker);
 
             if (beginIndex != -1)
             {
-                int endIndex = bufferedData.IndexOf(messageEndMarker, beginIndex);
+                int endIndex = message.IndexOf(messageEndMarker, beginIndex);
 
                 if (endIndex != -1)
                 {
-                    String foundMessage = bufferedData.Substring(beginIndex, (endIndex - beginIndex) + 1);
-                    bufferedData = bufferedData.Substring(endIndex + 1);
+                    String foundMessage = message.Substring(beginIndex, (endIndex - beginIndex) + 1);
 
+                    MessageBox.Show(foundMessage);
                     return foundMessage;
                 }
             }
 
+            MessageBox.Show("return null");
             return null;
         }
 

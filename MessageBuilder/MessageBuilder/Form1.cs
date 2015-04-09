@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -27,15 +28,16 @@ namespace MessageBuilder
 
         void messageBuilder_OnBufferedDataChanged(object sender, BufferedDataEventArgs e)
         {
-            String[] allMessages = e.bufferedData.Split(Convert.ToChar(messageEndMarker));
+            String receivedData = e.bufferedData;
+            string pattern = messageEndMarker;
+            String[] allMessages = Regex.Split(receivedData, pattern);
 
             foreach (String message in allMessages)
             {
-                MessageBox.Show(message);
-                /*if (message.Contains(messageBeginMarker) && message.Contains(messageEndMarker))
+                if (message != null || message != "")
                 {
-                    
-                }*/
+                    messageBuilder.FindAndRemoveNextMessage(message);                    
+                }
             }
 
         }
