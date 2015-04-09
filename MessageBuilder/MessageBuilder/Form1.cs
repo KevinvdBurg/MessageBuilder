@@ -31,17 +31,19 @@ namespace MessageBuilder
 
             foreach (String message in allMessages)
             {
-                if (message.Contains(messageBeginMarker) && message.Contains(messageEndMarker))
+                MessageBox.Show(message);
+                /*if (message.Contains(messageBeginMarker) && message.Contains(messageEndMarker))
                 {
                     
-                }
+                }*/
             }
 
         }
 
         private void btnSendMessage_Click(object sender, EventArgs e)
         {
-
+            String mess = tbMessage.Text;
+            messageBuilder.Append(mess);
         }
     }
 }
