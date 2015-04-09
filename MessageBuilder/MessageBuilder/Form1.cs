@@ -38,5 +38,10 @@ namespace MessageBuilder
             }
 
         }
+
+        private void btnSendMessage_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
