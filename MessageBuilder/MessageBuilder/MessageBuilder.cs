@@ -93,6 +93,8 @@ namespace MessageBuilder
         /// The next (complete) message (including markers), 
         /// or null if no message was found.
         /// </returns>
+       
+        //Useless?
         public String FindAndRemoveNextMessage(String message)
         {
             int beginIndex = message.IndexOf(messageBeginMarker);
@@ -105,12 +107,12 @@ namespace MessageBuilder
                 {
                     String foundMessage = message.Substring(beginIndex, (endIndex - beginIndex) + 1);
 
-                    MessageBox.Show(foundMessage);
+                    //MessageBox.Show(foundMessage);
                     return foundMessage;
                 }
             }
-
-            MessageBox.Show("return null");
+            
+            //Yep!
             return null;
         }
 

@@ -29,14 +29,17 @@ namespace MessageBuilder
         void messageBuilder_OnBufferedDataChanged(object sender, BufferedDataEventArgs e)
         {
             String receivedData = e.bufferedData;
-            string pattern = messageEndMarker;
+            string pattern = @"(?<=[" + messageEndMarker + "])";
             String[] allMessages = Regex.Split(receivedData, pattern);
-
+           
             foreach (String message in allMessages)
             {
-                if (message != null || message != "")
+                if (message != null && message != "")
                 {
-                    messageBuilder.FindAndRemoveNextMessage(message);                    
+                    if (message.Contains(messageBeginMarker) && message.Contains(messageEndMarker))
+                    {
+                        lbAllMessages.Items.Add(message.Substring(1).TrimEnd(Convert.ToChar(messageEndMarker)));
+                    }    
                 }
             }
 
