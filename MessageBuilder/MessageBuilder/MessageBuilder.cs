@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace MessageBuilder
 {
+    public delegate void BufferedDataChanged(object sender, BufferedDataEventArgs e);
+
     /// <summary>
     /// This class can be used to buffer text data.
     /// The buffered data makes up messages which can be retrieved
@@ -15,6 +17,7 @@ namespace MessageBuilder
     public class MessageBuilder
     {
         //FIELDS
+        public event BufferedDataChanged OnBufferedDataChanged;
         /// <summary>
         /// Marker that marks the start of a message.
         /// </summary>
@@ -27,6 +30,8 @@ namespace MessageBuilder
         /// Buffer to store text strings.
         /// </summary>
         private String bufferedData;
+
+        //CONSTRUCTORS
         /// <summary>
         /// Create a MessageBuilder instance.
         /// </summary>
@@ -38,8 +43,6 @@ namespace MessageBuilder
         /// Marker that is used to find the end of a message 
         /// when trying to find messages in the buffered data.
         /// </param>
-        
-        //CONSTRUCTORS
         public MessageBuilder(String messageBeginMarker, String messageEndMarker)
         {
             if (messageBeginMarker == null)
@@ -55,6 +58,7 @@ namespace MessageBuilder
             this.messageBeginMarker = messageBeginMarker;
             this.messageEndMarker = messageEndMarker;
             bufferedData = "";
+
         }
 
         //METHODS
@@ -67,11 +71,16 @@ namespace MessageBuilder
         /// </param>
         public void Append(String data)
         {
+            BufferedDataEventArgs e = new BufferedDataEventArgs();
+
             if (data != null)
             {
-                bufferedData += data;
+                e.bufferedData += data;
+
+                OnBufferedDataChanged(this, e);
             }
         }
+
         /// <summary>
         /// Find and remove the next (complete) message
         /// from the buffered data (including delimiters).
@@ -93,7 +102,7 @@ namespace MessageBuilder
 
                 if (endIndex != -1)
                 {
-                    String foundMessage = bufferedData.Substring( beginIndex, (endIndex - beginIndex) + 1);
+                    String foundMessage = bufferedData.Substring(beginIndex, (endIndex - beginIndex) + 1);
                     bufferedData = bufferedData.Substring(endIndex + 1);
 
                     return foundMessage;
@@ -102,6 +111,7 @@ namespace MessageBuilder
 
             return null;
         }
+
         /// <summary>
         /// Clear all buffered data
         /// </summary>
