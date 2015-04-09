@@ -31,7 +31,7 @@ namespace MessageBuilder
             String receivedData = e.bufferedData;
             string pattern = @"(?<=[" + messageEndMarker + "])";
             String[] allMessages = Regex.Split(receivedData, pattern);
-           
+            lbAllMessages.Items.Clear();
             foreach (String message in allMessages)
             {
                 if (message != null && message != "")
